@@ -1,6 +1,20 @@
-import { Button, ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import HomeAppBar from './HomeAppBar';
+//imagens
+import ImgRoot from '../../img/home_theme.png';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#689f38',
+        },
+        secondary: {
+            main: '#121212',
+        }
+    }
+});
 
 const useStyles = makeStyles({
     root: {
@@ -9,17 +23,12 @@ const useStyles = makeStyles({
         color: 'white',
         height: '100vh',
         padding: '0 30px',
+        fontFamily: 'Lato',
+        fontSize: '40px'
     },
-    bt: {
-        width: '30vh'
-    }
-});
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#689f38',
-        }
+    rootImage: {
+        marginTop: '70px',
+        padding: 0
     }
 });
 
@@ -27,9 +36,11 @@ function Home() {
     const classes = useStyles();
     return (
         <ThemeProvider theme={theme}>
-            <div className={classes.root}>
-                <Button className={classes.bt} variant='contained' color='primary'>Opa</Button>
-            </div>
+            <Box className={classes.root}>
+                <HomeAppBar />
+
+                
+            </Box>
         </ThemeProvider>
     )
 }

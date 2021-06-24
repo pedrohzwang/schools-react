@@ -14,7 +14,7 @@ CREATE TABLE public.usuario (
     id serial NOT NULL,
     nome character varying(45) not NULL,
     email character varying(45) NOT NULL,
-    senha character varying(45) NOT NULL,
+    senha character varying(255) NOT NULL,
     telefone character varying(20) NOT NULL,
     cd_tipo integer NOT NULL,
     dt_criacao date NOT NULL,

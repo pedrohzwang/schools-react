@@ -7,3 +7,7 @@ exports.saveUser = (user) => {
 exports.getUsers = () => {
     return userData.getUsers();
 }
+
+exports.getUser = (nome) => {
+    return userData.getUser(nome);
+}

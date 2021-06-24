@@ -15,6 +15,12 @@ exports.getUsers = async function () {
     return database.query('select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario');
 }
 
+exports.getUser = async function (nome) {
+    console.log(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome like $1`, [nome]);
+    return database.query(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome like $1`, [nome]);
+}
+
+
 /*exports.getUserInfo = async function (username) {
     console.log('select * from usuario where usuario = $1', [username]);
     return database.query('select * from usuario where usuario = $1',[username]);

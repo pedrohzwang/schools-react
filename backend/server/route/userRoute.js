@@ -2,7 +2,31 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../service/userService');
 
-router.post('/login', async function(req, res) {
+router.put('/user', async function(req, res) {
+    try {
+        const user = req.body;
+        console.log(user);
+        const newUser = await userService.saveUser(user);
+        console.log(newUser);
+        return res.status(200).json(newUser);
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+});
+
+router.get('/users', async function(req, res) {
+    try {
+        const users = await userService.getUsers();
+        console.log(users);
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+});
+
+
+
+/*router.post('/login', async function(req, res) {
     try {
         const user = req.body;
         console.log(user);
@@ -17,18 +41,8 @@ router.post('/login', async function(req, res) {
     } catch (error) {
         res.json({message: error.message})
     }
-});
+});*/
 
-router.put('/user', async function(req, res) {
-    try {
-        const user = req.body;
-        console.log(user);
-        const newUser = await userService.saveUser(user);
-        console.log(newUser);
-        return res.status(200).json(newUser);
-    } catch (error) {
-        res.json({message: error.message})
-    }
-});
+
 
 module.exports = router;

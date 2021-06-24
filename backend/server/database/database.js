@@ -4,7 +4,7 @@ const db = pgp({
     password: '123',
     host: 'localhost',
     port: 5432,
-    database: 'aulareact'
+    database: 'schools'
 });
 
 module.exports = db;

@@ -28,7 +28,8 @@ router.get('/users', async function(req, res) {
 
 router.get('/user/:nome', async function(req, res) {
     try {
-        const user = await userService.getUser(req.params);
+        console.log(req.params.nome);
+        const user = await userService.getUser(req.params.nome);
         console.log(user);
         return res.status(200).json(user);
     } catch (error) {

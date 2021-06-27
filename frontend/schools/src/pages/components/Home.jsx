@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import HomeAppBar from './HomeAppBar';
 //imagens
 import ImgRoot from '../../img/home_theme.png';
@@ -27,7 +27,6 @@ const useStyles = makeStyles({
         fontSize: '40px'
     },
     rootImage: {
-        marginTop: '70px',
         padding: 0
     }
 });
@@ -36,11 +35,17 @@ function Home() {
     const classes = useStyles();
     return (
         <ThemeProvider theme={theme}>
-            <Box className={classes.root}>
-                <HomeAppBar />
-
+            <Grid container className={classes.root}>
+                <Grid item lg={12}>
+                    <HomeAppBar />
+                </Grid>
+                <Grid item lg={12} justify={'space-between'}>
+                    <img src={ImgRoot} alt="Logo" />
+                </Grid>
                 
-            </Box>
+               
+            </Grid>
+
         </ThemeProvider>
     )
 }

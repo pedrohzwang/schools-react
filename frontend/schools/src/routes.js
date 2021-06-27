@@ -19,9 +19,3 @@ function Routes() {
 
 export default Routes;
 
-/*<Route path='/' exact={true} component={Login} />
-                <Route path='/livros' exact={true} component={ListarLivros2} />
-                <Route path='/livro' exact={true} component={Livro} />
-                <Route path='/cadastrar' exact={true} component={Cadastrar} />
-                <Route path='/login' exact={true} component={Login} />
-                <Route path='/cadastrarUsuario' exact={true} component={CadastrarUsuario} />*/

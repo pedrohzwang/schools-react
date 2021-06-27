@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { ThemeProvider, createMuiTheme, makeStyles, Box } from '@material-ui/core';
-import { Grid, Paper, TextField, Button } from '@material-ui/core';
+import React from 'react';
+import { ThemeProvider, createMuiTheme, makeStyles, Box, Grid, Button } from '@material-ui/core';
 import api from '../services/api';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import schema from './schema';
 
 const theme = createMuiTheme({
     palette: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
         fontFamily: 'Lato',
         fontSize: '40px'
     },
-    login: {
+    title: {
         textAlign: 'center'
     },
     p: {
@@ -44,31 +45,24 @@ const useStyles = makeStyles({
         background: '#383838',
         borderRadius: '10px'
     },
-    submit: {
-        background: theme.palette.primary.main
+    form: {
+        marginTop: '30px'
     }
 
 });
 
 function UserRegister() {
 
-    const [nome, setNome] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [senha, setSenha] = useState(null);
-    const [cdTipo, setTipoPerfil] = useState(null);
-    const [telefone, setTelefone] = useState(null);
-    const [diretorioAvatar, setDiretorioAvatar] = useState(null);
-    
-    async function handleRegisterUser(e) {
-        e.preventDefault();
-
+    async function handleRegisterUser(values) {
+        console.log("Dados: \n");
+        console.log(values);
         const user = {
-            nome,
-            email,
-            senha,
-            cdTipo,
-            telefone,
-            diretorioAvatar
+            nome: values.nome,
+            email: values.email,
+            senha: values.senha,
+            cdTipo: values.cdTipo,
+            telefone: values.telefone,
+            diretorioAvatar: values.diretorioAvatar
         };
 
         try {
@@ -85,48 +79,73 @@ function UserRegister() {
         <ThemeProvider theme={theme}>
             <Box className={classes.root}>
                 <Grid container justify={'center'}>
-                    <Grid className={classes.login} item lg={12}>
+                    <Grid item className={classes.title} lg={12}>
                         <h3 color={'secondary'} className={classes.h3}>Novo Usuário</h3>
                     </Grid>
-                    <Grid item>
-                        {/*<Paper className={classes.p} justify={'center'} />*/}
-                        <form onSubmit={handleRegisterUser}>
-                            <Grid container spacing={5} className={classes.inputGrid}>
-                                <Grid item lg={5}>
-                                    <TextField required color={'primary'} 
-                                    className={classes.inputs} label="Nome" 
-                                    value={nome} onChange={e => setNome(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={5}>
-                                    <TextField required type={'password'} color={'primary'} 
-                                    className={classes.inputs} label="Senha" 
-                                    value={senha} onChange={e => setSenha(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={2}>
-                                    <TextField required color={'primary'} 
-                                    className={classes.inputs} label="Tipo Perfil Lookup" 
-                                    value={cdTipo} onChange={e => setTipoPerfil(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={4}>
-                                    <TextField required color={'primary'} className={classes.inputs} 
-                                    label="E-mail" 
-                                    value={email} onChange={e => setEmail(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={4}>
-                                    <TextField required color={'primary'} className={classes.inputs} 
-                                    label="Telefone" 
-                                    value={telefone} onChange={e => setTelefone(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={4}>
-                                    <TextField required color={'primary'} className={classes.inputs} 
-                                    label="Avatar Arquivo" 
-                                    value={diretorioAvatar} onChange={e => setDiretorioAvatar(e.target.value)} />
-                                </Grid>
-                                <Grid item lg={12} sm={12} xs={12} justify={'center'}>
-                                    <Button color={'secondary'} className={classes.submit} type={'submit'}>Enviar</Button>
-                                </Grid>
-                            </Grid>
-                        </form>
+                    <Grid item className={classes.form}>
+                        <Formik
+                            validationSchema={schema}
+                            onSubmit={handleRegisterUser}
+                            initialValues={{
+                                nome: '',
+                                email: '',
+                                senha: '',
+                                cdTipo: '',
+                                telefone: '',
+                                diretorioAvatar: ''
+                            }}
+                        >
+                            {({ values, errors }) => (
+                                <Form>
+                                    <Grid container spacing={5} className={classes.inputGrid}>
+                                        <Grid item lg={5}>
+                                            <Field required type="text" className={'form-control'}
+                                                value={values.nome} name="nome"
+                                                placeholder="Nome" />
+                                        </Grid>
+                                        <Grid item lg={4}>
+                                            <Field required type="password" className={'form-control'}
+                                                value={values.senha} name="senha"
+                                                placeholder="Senha" />
+                                        </Grid>
+                                        <Grid item lg={3}>
+                                            <Field required as="select" className={'form-control'}
+                                                name="cdTipo" value={values.cdTipo}
+                                                placeholder="Tipo de Perfil">
+                                                <option default value="">Selecione</option>
+                                                <option value="1">Administrador</option>
+                                                <option value="2">Gerente</option>
+                                                <option value="3">Operacional</option>
+                                            </Field>
+                                        </Grid>
+                                        <Grid item lg={4}>
+                                            <Field required type="email" className={'form-control'}
+                                                name="email" value={values.email}
+                                                placeholder="E-mail" />
+                                        </Grid>
+                                        <Grid item lg={4}>
+                                            <Field required type="text" className={'form-control'}
+                                                name="telefone" value={values.telefone}
+                                                pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+                                                placeholder="Telefone (99 99999-9999)" />
+                                        </Grid>
+                                        <Grid item lg={4}>
+                                            <Field required type="text" className={'form-control'}
+                                                name="diretorioAvatar" value={values.diretorioAvatar}
+                                                placeholder="Avatar" />
+                                        </Grid>
+                                        <Grid item lg={12} sm={12} xs={12}>
+                                            <Grid container justify={'center'}>
+                                                <Grid item>
+                                                    <Button color={'primary'} variant={'outlined'} type="submit">Salvar</Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <ErrorMessage name="email" value={errors.email} />
+                                </Form>
+                            )}
+                        </Formik>
                     </Grid>
                 </Grid>
             </Box>

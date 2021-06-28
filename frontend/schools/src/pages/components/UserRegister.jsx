@@ -1,8 +1,9 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme, makeStyles, Box, Grid, Button } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, makeStyles, Box, Grid, Button, Paper } from '@material-ui/core';
 import api from '../services/api';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import schema from './schema';
+import Dropzone from 'react-dropzone';
 
 const theme = createMuiTheme({
     palette: {
@@ -47,6 +48,10 @@ const useStyles = makeStyles({
     },
     form: {
         marginTop: '30px'
+    },
+    errorMessage: {
+        fontSize: '10px',
+        color: 'red',
     }
 
 });
@@ -69,6 +74,7 @@ function UserRegister() {
             console.log("Dados: \n" + JSON.stringify(user));
             const response = await api.put('user', user);
             console.log(response.data);
+            alert('Sucesso!')
         } catch (error) {
             alert(error.message);
         }
@@ -122,6 +128,8 @@ function UserRegister() {
                                             <Field required type="email" className={'form-control'}
                                                 name="email" value={values.email}
                                                 placeholder="E-mail" />
+                                                {/*<span className="errorMessage">{errors.email}</span>*/}
+                                            {/*<ErrorMessage component="p" name="email" value={errors.email} />*/}
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="text" className={'form-control'}
@@ -130,9 +138,17 @@ function UserRegister() {
                                                 placeholder="Telefone (99 99999-9999)" />
                                         </Grid>
                                         <Grid item lg={4}>
-                                            <Field required type="text" className={'form-control'}
+                                            <Field required type="file" accept="image/*" className={'form-control'}
                                                 name="diretorioAvatar" value={values.diretorioAvatar}
                                                 placeholder="Avatar" />
+                                            {/*<input type="file" class="form-control" accept="image/*"
+                                                name="diretorioAvatar" value={values.diretorioAvatar} 
+                                            />*/}
+                                            {/*<Dropzone accept="image/*" onDropAccepted={() => {}}>
+                                                { ({ getRootProps, getInputProps, isDragActive, isDragReject}) => (
+
+                                                )}
+                                            </Dropzone>*/}
                                         </Grid>
                                         <Grid item lg={12} sm={12} xs={12}>
                                             <Grid container justify={'center'}>
@@ -142,10 +158,16 @@ function UserRegister() {
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <ErrorMessage name="email" value={errors.email} />
                                 </Form>
                             )}
                         </Formik>
+                    </Grid>
+                    <Grid container>
+                        <Grid item lg={12} sm={12} xs={12}>
+                            <Paper>
+
+                            </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Box>

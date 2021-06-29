@@ -3,7 +3,7 @@ const router = express.Router();
 const userService = require('../service/userService');
 const encrypt = require('crypto-js');
 
-router.put('/user', async function(req, res) {
+router.post('/user', async function(req, res) {
     try {
         const user = req.body;
         user.senha = encrypt.SHA256(user.senha).toString();
@@ -30,6 +30,28 @@ router.get('/user/:nome', async function(req, res) {
     try {
         console.log(req.params.nome);
         const user = await userService.getUser(req.params.nome);
+        console.log(user);
+        return res.status(200).json(user);
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+});
+
+router.delete('/user/:id', async function(req, res) {
+    try {
+        console.log(req.params.id);
+        const user = await userService.deleteUser(req.params.id);
+        console.log(user);
+        return res.status(200).send();
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+});
+
+router.put('/user', async function(req, res) {
+    try {
+        console.log(req.body);
+        const user = await userService.updateUser(req.body);
         console.log(user);
         return res.status(200).json(user);
     } catch (error) {

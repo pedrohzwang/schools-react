@@ -45,8 +45,6 @@ CREATE TABLE public.aluno (
 );
 
 
-
-
 INSERT INTO public.livro (nome, editora, isbn, quantidade, assunto, autor, descricao) VALUES ('teste teste', 7, '978-3-16-148410-1', 21, 5, 13, 'descricao qualquer');
 INSERT INTO public.livro (nome, editora, isbn, quantidade, assunto, autor, descricao) VALUES ('Os 3 porquinhos', 1, '12332342342', 10, 1, 10, 'descricao qualquer');
 INSERT INTO public.livro (nome, editora, isbn, quantidade, assunto, autor, descricao) VALUES ('Os 3 porquinhos', 1, '12332342342', 10, 1, 10, 'descricao qualquer');

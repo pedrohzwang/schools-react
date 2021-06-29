@@ -11,3 +11,11 @@ exports.getUsers = () => {
 exports.getUser = (nome) => {
     return userData.getUser(nome);
 }
+
+exports.deleteUser = (id) =>  {
+    return userData.deleteUser(id);
+}
+
+exports.updateUser = (user) => {
+    return userData.updateUser(user);
+}

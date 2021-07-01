@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { ThemeProvider, createMuiTheme, makeStyles, Box, Grid, Button, Paper } from '@material-ui/core';
 import api from '../services/api';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import schema from './schema';
-import Dropzone from 'react-dropzone';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 const theme = createMuiTheme({
     palette: {
@@ -56,7 +58,20 @@ const useStyles = makeStyles({
 
 });
 
-function UserRegister() {
+function UserUpdate() {
+
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        var userId = (new URLSearchParams(window.location.search)).get("id");
+        console.log(userId);
+        api.get(`user/${userId}`, {}).then(response => {
+            setUser(response.data);
+            //console.log(response.data);
+        });
+        //console.log(JSON.stringify(user));
+        console.log(user);
+    }, []);
 
     async function handleRegisterUser(values) {
         console.log("Dados: \n");
@@ -86,19 +101,19 @@ function UserRegister() {
             <Box className={classes.root}>
                 <Grid container justify={'center'}>
                     <Grid item className={classes.title} lg={12}>
-                        <h3 color={'secondary'} className={classes.h3}>Novo Usuário</h3>
+                        <h3 color={'secondary'} className={classes.h3}>Atualizar usuário</h3>
                     </Grid>
                     <Grid item className={classes.form}>
                         <Formik
                             validationSchema={schema}
                             onSubmit={handleRegisterUser}
                             initialValues={{
-                                nome: '',
-                                email: '',
-                                senha: '',
-                                cdTipo: '',
-                                telefone: '',
-                                diretorioAvatar: ''
+                                nome: user.nome,
+                                email: user.email,
+                                senha: user.senha,
+                                cdTipo: user.tipo_perfil,
+                                telefone: user.telefone,
+                                diretorioAvatar: user.avatar
                             }}
                         >
                             {({ values, errors }) => (
@@ -129,7 +144,7 @@ function UserRegister() {
                                                 name="email" value={values.email}
                                                 placeholder="E-mail" />
                                                 <span className="errorMessage">{errors.email}</span>
-                                            {/*<ErrorMessage component="p" name="email" value={errors.email} />*/}
+                                            <ErrorMessage component="p" name="email" value={errors.email} />
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="text" className={'form-control'}
@@ -172,19 +187,7 @@ function UserRegister() {
                 </Grid>
             </Box>
         </ThemeProvider>
-
-        /*
-            Login
-             <Grid container justify={'center'}>
-                    <Grid className={classes.login} item lg={12}>
-                        <h2 color={'secondary'} className={classes.h2}>Login</h2>
-                    </Grid>
-                    <Grid item>
-                        <Paper className={classes.p} justify={'center'} />
-                    </Grid>
-                </Grid>
-        */
     )
 }
 
-export default UserRegister;
+export default UserUpdate;

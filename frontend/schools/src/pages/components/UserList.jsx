@@ -8,6 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import api from '../services/api';
+import HomeAppBar from './HomeAppBar';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -33,55 +36,75 @@ const useStyles = makeStyles({
     },
 });
 
-export default function ListarLivros2() {
+export default function UserList() {
     const classes = useStyles();
 
-    const [livros, setLivros] = useState([]);
+    const [users, setUsers] = useState([]);
 
-    async function handleDeleteLivro(id) {
+    async function handleDeleteUser(id) {
         try {
-            await api.delete(`book/${id}`, {});
-            setLivros(livros.filter(livro => livro.idlivro !== id));
+            await api.delete(`user/${id}`, {});
+            setUsers(users.filter(user => user.id !== id));
         } catch (error) {
-            alert('Erro ao deletar livro');
+            alert('Erro ao deletar user');
         }
     }
 
+    function handleUpdateUser(id) {
+        //redirecionamento para pagina de atualização de usuário
+        console.log(id);
+        const url = `/updateUser?id=${id}`;
+        <Redirect to={{
+            pathname: "/updateUser",
+            search: `?id=${id}`,
+        }} />
+        //?id=${id}`}
+        //'/updateUser?id='
+    }
+
     useEffect(() => {
-        api.get('books', {}).then(response => {
-            setLivros(response.data);
+        api.get('users', {}).then(response => {
+            setUsers(response.data);
         });
     }, []);
 
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} size="small" aria-label="a dense table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Id</StyledTableCell >
-                        <StyledTableCell align="right">Nome</StyledTableCell >
-                        <StyledTableCell align="right">Autor</StyledTableCell >
-                        <StyledTableCell align="right">ISBN</StyledTableCell >
-                        <StyledTableCell align="right">Descrição</StyledTableCell >
-                        <StyledTableCell align="center">Excluir</StyledTableCell >
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {livros.map(livro => (
-                        <StyledTableRow key={livro.idlivro}>
-                            <StyledTableCell component="th" scope="row">
-                                {livro.idlivro}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{livro.nome}</StyledTableCell >
-                            <StyledTableCell align="right">{livro.autor}</StyledTableCell >
-                            <StyledTableCell align="right">{livro.isbn}</StyledTableCell >
-                            <StyledTableCell align="right">{livro.descricao}</StyledTableCell >
-                            <StyledTableCell align="center">
-                                <button type="button" onClick={() => handleDeleteLivro(livro.idlivro)}>Excluir</button></StyledTableCell >
-                        </StyledTableRow >
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div>
+            {/*<HomeAppBar />*/}
+
+            <TableContainer component={Paper}>
+                <Table className={classes.table} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Id</StyledTableCell >
+                            <StyledTableCell align="right">Nome</StyledTableCell >
+                            <StyledTableCell align="right">Autor</StyledTableCell >
+                            <StyledTableCell align="right">Perfil</StyledTableCell >
+                            <StyledTableCell align="center">Excluir</StyledTableCell >
+                            <StyledTableCell align="center">Atualizar</StyledTableCell >
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users.map(user => (
+                            <StyledTableRow key={user.id}>
+                                <StyledTableCell component="th" scope="row">
+                                    {user.id}
+                                </StyledTableCell>
+                                <StyledTableCell align="right">{user.nome}</StyledTableCell >
+                                <StyledTableCell align="right">{user.email}</StyledTableCell >
+                                <StyledTableCell align="right">{user.tipo_perfil}</StyledTableCell >
+                                <StyledTableCell align="center">
+                                    <button className="btn btn-primary" type="button" onClick={() => handleDeleteUser(user.id)}>Excluir</button>
+                                </StyledTableCell >
+                                <StyledTableCell align="center">
+                                    {/*<button className="btn btn-primary" type="button" onClick={() => handleUpdateUser(user.id)}></button>*/}
+                                    <Link className="btn btn-primary" to={`/updateUser?id=${user.id}`}>Atualizar</Link> 
+                                </StyledTableCell >
+                            </StyledTableRow >
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }

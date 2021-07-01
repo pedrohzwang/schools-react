@@ -12,6 +12,10 @@ exports.getUser = (nome) => {
     return userData.getUser(nome);
 }
 
+exports.getUserById = (id) => {
+    return userData.getUserById(id);
+}
+
 exports.deleteUser = (id) =>  {
     return userData.deleteUser(id);
 }

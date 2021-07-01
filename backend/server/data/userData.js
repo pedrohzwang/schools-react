@@ -20,6 +20,12 @@ exports.getUser = async function (nome) {
     return database.query(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome ilike '%'||$1||'%'`, [nome]);
 }
 
+exports.getUserById = async function (id) {
+    console.log(id);
+    console.log('select nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where id = $1', [id]);
+    return database.one('select nome, email, senha, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where id = $1', [id]);
+}
+
 exports.deleteUser = async function (id) {
     console.log(id);
     return database.none('delete from usuario where id = $1', [id]);

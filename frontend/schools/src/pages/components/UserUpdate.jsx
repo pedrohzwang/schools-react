@@ -60,34 +60,38 @@ const useStyles = makeStyles({
 
 function UserUpdate() {
 
-    const [user, setUser] = useState();
+    const [user, setUser] = useState('');
+    const [nome, setNome] = useState();
+    const [email, setEmail] = useState();
+    const [senha, setSenha] = useState();
+    const [cdTipo, setCdTipo] = useState();
+    const [telefone, setTelefone] = useState();
+    const [diretorioAvatar, setDiretorioAvatar] = useState();
 
     useEffect(() => {
         var userId = (new URLSearchParams(window.location.search)).get("id");
         console.log(userId);
-        api.get(`user/${userId}`, {}).then(response => {
-            setUser(response.data);
-            //console.log(response.data);
-        });
+        const response = api.get(`user/${userId}`, {})
         //console.log(JSON.stringify(user));
         console.log(user);
     }, []);
 
-    async function handleRegisterUser(values) {
+    async function handleRegisterUser(userData) {
+
         console.log("Dados: \n");
-        console.log(values);
-        const user = {
-            nome: values.nome,
-            email: values.email,
-            senha: values.senha,
-            cdTipo: values.cdTipo,
-            telefone: values.telefone,
-            diretorioAvatar: values.diretorioAvatar
-        };
+        console.log(userData);
+        /*const userDataUpdated = {
+            nome: userData.nome,
+            email: userData.email,
+            senha: userData.senha,
+            cdTipo: userData.cdTipo,
+            telefone: userData.telefone,
+            diretorioAvatar: userData.diretorioAvatar
+        };*/
 
         try {
-            console.log("Dados: \n" + JSON.stringify(user));
-            const response = await api.post('user', user);
+            console.log("Dados: \n" + JSON.stringify(userData));
+            const response = await api.post('user', userData);
             console.log(response.data);
             alert('Sucesso!')
         } catch (error) {
@@ -96,6 +100,8 @@ function UserUpdate() {
     }
 
     const classes = useStyles();
+
+
     return (
         <ThemeProvider theme={theme}>
             <Box className={classes.root}>
@@ -106,34 +112,26 @@ function UserUpdate() {
                     <Grid item className={classes.form}>
                         <Formik
                             validationSchema={schema}
-                            onSubmit={handleRegisterUser}
-                            initialValues={{
-                                nome: user.nome,
-                                email: user.email,
-                                senha: user.senha,
-                                cdTipo: user.tipo_perfil,
-                                telefone: user.telefone,
-                                diretorioAvatar: user.avatar
-                            }}
+                            onSubmit={handleRegisterUser(user)}
                         >
-                            {({ values, errors }) => (
+                            {({ errors }) => (
                                 <Form>
                                     <Grid container spacing={5} className={classes.inputGrid}>
                                         <Grid item lg={5}>
                                             <Field required type="text" className={'form-control'}
-                                                value={values.nome} name="nome"
+                                                value={user.nome} name="nome"
                                                 placeholder="Nome" />
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="password" className={'form-control'}
-                                                value={values.senha} name="senha"
+                                                value={user.senha} name="senha"
                                                 placeholder="Senha" />
                                         </Grid>
                                         <Grid item lg={3}>
                                             <Field required as="select" className={'form-control'}
-                                                name="cdTipo" value={values.cdTipo}
+                                                name="cdTipo" value={user.cdTipo}
                                                 placeholder="Tipo de Perfil">
-                                                <option default value="">Selecione</option>
+                                                <option value="">Selecione</option>
                                                 <option value="1">Administrador</option>
                                                 <option value="2">Gerente</option>
                                                 <option value="3">Operacional</option>
@@ -141,29 +139,21 @@ function UserUpdate() {
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="email" className={'form-control'}
-                                                name="email" value={values.email}
+                                                name="email" value={user.email}
                                                 placeholder="E-mail" />
                                                 <span className="errorMessage">{errors.email}</span>
                                             <ErrorMessage component="p" name="email" value={errors.email} />
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="text" className={'form-control'}
-                                                name="telefone" value={values.telefone}
+                                                name="telefone" value={user.telefone}
                                                 pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
                                                 placeholder="Telefone (99 99999-9999)" />
                                         </Grid>
                                         <Grid item lg={4}>
                                             <Field required type="file" accept="image/*" className={'form-control'}
-                                                name="diretorioAvatar" value={values.diretorioAvatar}
+                                                name="diretorioAvatar" value={user.diretorioAvatar}
                                                 placeholder="Avatar" />
-                                            {/*<input type="file" class="form-control" accept="image/*"
-                                                name="diretorioAvatar" value={values.diretorioAvatar} 
-                                            />*/}
-                                            {/*<Dropzone accept="image/*" onDropAccepted={() => {}}>
-                                                { ({ getRootProps, getInputProps, isDragActive, isDragReject}) => (
-
-                                                )}
-                                            </Dropzone>*/}
                                         </Grid>
                                         <Grid item lg={12} sm={12} xs={12}>
                                             <Grid container justify={'center'}>

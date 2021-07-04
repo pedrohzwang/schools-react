@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,16 +12,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Formik, Form, Field } from 'formik';
-import schema from './schema'
-import { useState } from 'react';
-import api from '../services/api';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import schema from './schema';
+
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="http://localhost:3000">
+            <Link color="inherit" href="http://localhost:3000/">
                 Schools
             </Link>{' '}
             {new Date().getFullYear()}
@@ -48,69 +47,75 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    inputs: {
-        margin: theme.spacing(3)
+    errors: {
+        flexDirection: 'column'
     }
 }));
 
 export default function SignIn() {
-
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-
-    async function handleLogin(e) {
-        e.preventDefault();
-        const loginData = {
-            email,
-            senha
-        }
-        console.log(loginData);
-
-    }
-
     const classes = useStyles();
+
+    const handleSubmit = (values) => {
+        const loginData = {
+            email: values.email,
+            senha: values.senha
+        };
+        alert(JSON.stringify(loginData));
+    }
 
     return (
         <Container component="main" maxWidth="xs">
+            <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Login
                 </Typography>
                 <Formik
                     validationSchema={schema}
-                    onSubmit={handleLogin}
+                    initialValues={{
+                        email: '',
+                        senha: ''
+                    }}
+                    onSubmit={handleSubmit}
                 >
-                    {() => (
-                        <Form className={classes.form} noValidate>
-                            <Field component={TextField}
+                    {({ values, errors }) => (
+                        <Form className={classes.form}>
+                            <TextField
+                                type="email"
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="Email"
                                 name="email"
-                                autoFocus 
-                                value={email}
-                                onChange={e => setEmail(e.target.value)} />
-                            <Field component={TextField}
+                                autoFocus
+                                onChange={e => (values.email = e.target.value)}
+                            />
+                            <ErrorMessage className={classes.errors} name="email" />
+                            <TextField
+                                type="password"
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
+                                id="senha"
+                                label="Senha"
                                 name="senha"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                value={senha} 
-                                onChange={e => setSenha(e.target.value)} />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                onChange={e => (values.senha = e.target.value)}
                             />
+                            <ErrorMessage className={classes.errors} name="senha" />
+                            <Grid container>
+                                <Grid item>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label="Lembrar-me"
+                                    />
+                                </Grid>
+                            </Grid>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -118,17 +123,12 @@ export default function SignIn() {
                                 color="primary"
                                 className={classes.submit}
                             >
-                                Sign In
+                                Login
                             </Button>
                             <Grid container>
-                                <Grid item xs>
+                                <Grid item xs={12} lg={12}>
                                     <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
+                                        Esqueci minha senha
                                     </Link>
                                 </Grid>
                             </Grid>

@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../service/userService');
 const encrypt = require('crypto-js');
+const secret = require ('../auth/secret');
 
-router.post('/user', async function(req, res) {
+router.post('/user', secret.verifyJWT, async function(req, res) {
     try {
         const user = req.body;
         user.senha = encrypt.SHA256(user.senha).toString();
@@ -16,7 +17,7 @@ router.post('/user', async function(req, res) {
     }
 });
 
-router.get('/users', async function(req, res) {
+router.get('/users', secret.verifyJWT, async function(req, res) {
     try {
         const users = await userService.getUsers();
         console.log(users);
@@ -26,7 +27,7 @@ router.get('/users', async function(req, res) {
     }
 });
 
-router.get('/user/:id', async function(req, res) {
+router.get('/user/:id', secret.verifyJWT, async function(req, res) {
     try {
         console.log(req.params.id);
         const users = await userService.getUserById(req.params.id);
@@ -37,7 +38,7 @@ router.get('/user/:id', async function(req, res) {
     }
 });
 
-router.get('/user/:nome', async function(req, res) {
+router.get('/user/:nome', secret.verifyJWT, async function(req, res) {
     try {
         console.log(req.params.nome);
         const user = await userService.getUser(req.params.nome);
@@ -48,7 +49,7 @@ router.get('/user/:nome', async function(req, res) {
     }
 });
 
-router.delete('/user/:id', async function(req, res) {
+router.delete('/user/:id', secret.verifyJWT, async function(req, res) {
     try {
         console.log(req.params.id);
         const user = await userService.deleteUser(req.params.id);
@@ -59,7 +60,7 @@ router.delete('/user/:id', async function(req, res) {
     }
 });
 
-router.put('/user', async function(req, res) {
+router.put('/user', secret.verifyJWT, async function(req, res) {
     try {
         console.log(req.body);
         const user = await userService.updateUser(req.body);

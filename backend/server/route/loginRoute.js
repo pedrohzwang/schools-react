@@ -22,7 +22,7 @@ router.post('/login', async function(req, res) {
 })
 
 router.post('/logout', secret.verifyJWT, function(req, res) {
-    const token = req.headers['x-acces-token'];
+    const token = req.headers['x-access-token'];
     secret.addBlacklist(token);
     return res.status(200).end();
 })

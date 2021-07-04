@@ -1,20 +1,34 @@
-
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Context } from './context/AuthContext.js';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Home from './pages/components/Home.jsx';
 import UserRegister from './pages/components/UserRegister.jsx';
 import UserList from './pages/components/UserList.jsx';
 import UserUpdate from './pages/components/UserUpdate.jsx';
 import Login from './pages/components/Login.jsx';
 
+function CustomRoute({ isPrivate, ...rest }) {
+    const { loading, authenticated } = useContext(Context);
+
+    if (loading) {
+        return <h1>Loading</h1>
+    }
+
+    if (isPrivate && !authenticated) {
+        return <Redirect to="/login" />;
+    }
+
+    return <Route {...rest} />;
+}
+
 function Routes() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route path='/' exact={true} component={Home} />
-                <Route path='/newUser' exact={true} component={UserRegister} />
-                <Route path='/users' exact={true} component={UserList} />
-                <Route path='/updateUser' exact={true} component={UserUpdate} />
+                <CustomRoute isPrivate path='/newUser' component={UserRegister} />
+                <CustomRoute isPrivate path='/users' component={UserList} />
+                <CustomRoute isPrivate path='/updateUser' component={UserUpdate} />
                 <Route path='/login' exact={true} component={Login} />
             </Switch>
         </BrowserRouter>

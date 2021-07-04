@@ -14,7 +14,7 @@ exports.verifyJWT = (req, res, next) => {
         return res.status(401).end();
     }
 
-    const token = req.headers['x-acces-token'];
+    const token = req.headers['x-access-token'];
     const index = blacklist.findIndex(item => item === token);
 
     if (index !== -1) {

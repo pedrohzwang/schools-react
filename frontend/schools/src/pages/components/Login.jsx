@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from '../../context/AuthContext';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+    const { handleLogin } = useContext(Context);
     const classes = useStyles();
 
     const handleSubmit = (values) => {
@@ -60,7 +62,8 @@ export default function SignIn() {
             email: values.email,
             senha: values.senha
         };
-        alert(JSON.stringify(loginData));
+        //alert(JSON.stringify(loginData));
+        handleLogin(loginData);
     }
 
     return (
@@ -85,7 +88,7 @@ export default function SignIn() {
                         <Form className={classes.form}>
                             <TextField
                                 type="email"
-                                variant="outlined"
+                                variant="filled"
                                 margin="normal"
                                 required
                                 fullWidth
@@ -98,7 +101,7 @@ export default function SignIn() {
                             <ErrorMessage className={classes.errors} name="email" />
                             <TextField
                                 type="password"
-                                variant="outlined"
+                                variant="filled"
                                 margin="normal"
                                 required
                                 fullWidth

@@ -4,14 +4,15 @@ import Routes from './routes';
 import { CssBaseline } from '@material-ui/core';
 import { Router } from 'react-router-dom';
 import history from './history';
+import { AuthProvider } from './context/AuthContext';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <AuthProvider>
     <CssBaseline />
     <Router history={history}>
       <Routes />
     </Router>
-  </React.StrictMode>,
+  </AuthProvider>,
   document.getElementById('root')
 );
 

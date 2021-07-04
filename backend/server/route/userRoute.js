@@ -63,6 +63,7 @@ router.delete('/user/:id', secret.verifyJWT, async function(req, res) {
 router.put('/user', secret.verifyJWT, async function(req, res) {
     try {
         console.log(req.body);
+        req.body.senha = encrypt.SHA256(req.body.senha).toString();
         const user = await userService.updateUser(req.body);
         console.log(user);
         return res.status(200).json(user);
@@ -70,24 +71,5 @@ router.put('/user', secret.verifyJWT, async function(req, res) {
         return res.status(400).json({message: error.message})
     }
 });
-
-/*router.post('/login', async function(req, res) {
-    try {
-        const user = req.body;
-        console.log(user);
-        const verify = await userService.verifyLogin(user);
-        console.log(verify);
-        console.log(verify[0].senha, user.senha);
-        if(verify[0].senha == user.senha){
-            return res.status(200).json({message: 'logado'});
-        } else{
-            return res.status(200).json({message: 'login ou senha inválidos'});
-        }
-    } catch (error) {
-        res.json({message: error.message})
-    }
-});*/
-
-
 
 module.exports = router;

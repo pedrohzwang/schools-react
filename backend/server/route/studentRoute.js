@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 const studentService = require('../service/studentService');
 
+router.post('/student', async function(req, res) {
+    try {
+        const student = req.body;
+        console.log(student);
+        const newStudent = await studentService.saveStudent(student);
+        console.log(newStudent);
+        return res.status(200).json(newStudent);
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+});
+
 router.get('/students', async function(req, res) {
     try {
         const students = await studentService.getStudents();

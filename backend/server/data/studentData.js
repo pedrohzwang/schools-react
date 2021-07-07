@@ -6,30 +6,26 @@ var year = data.getFullYear();
 currentDate = year + '-' + month + '-' + day;
 
 exports.saveStudent = async function (student) {
-    console.log('INSERT INTO usuario (nome, email, senha, telefone, cd_tipo, dt_criacao, dt_atualizacao, avatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning *', [student.nome, student.email, student.senha, student.telefone, student.cdTipo, currentDate, currentDate, student.diretorioAvatar]);
-    return database.one('INSERT INTO usuario (nome, email, senha, telefone, cd_tipo, dt_criacao, dt_atualizacao, avatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning *', [student.nome, student.email, student.senha, student.telefone, student.cdTipo, currentDate, currentDate, student.diretorioAvatar]);
+    console.log('insert into aluno (nome, genero, dt_matricula, dt_atualizacao, alergia, necessidade_especial, nome_escola, turno_escola, vl_matricula, vl_mensalidade, venc_mensalidade, dt_fim_matricula) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) returning * ', [student.nome, student.genero, currentDate, currentDate, student.alergia, student.necessidadeEspecial, student.nomeEscola, student.turnoEscola, student.vlMatricula, student.vlMensalidade, student.vencMensalidade, student.dtFimMatricula]);
+    return database.one('insert into aluno (nome, genero, dt_matricula, dt_atualizacao, alergia, necessidade_especial, nome_escola, turno_escola, vl_matricula, vl_mensalidade, venc_mensalidade, dt_fim_matricula) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) returning * ', [student.nome, student.genero, currentDate, currentDate, student.alergia, student.necessidadeEspecial, student.nomeEscola, student.turnoEscola, student.vlMatricula, student.vlMensalidade, student.vencMensalidade, student.dtFimMatricula]);
 }
 
 exports.getStudents = async function () {
-    console.log('select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario');
-    return database.query('select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario');
-}
-
-exports.getStudent = async function (nome) {
-    console.log(nome);
-    return database.query(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome ilike '%'||$1||'%'`, [nome]);
+    console.log('select * from aluno');
+    return database.query('select * from aluno');
 }
 
 exports.getStudentById = async function (id) {
-    console.log(nome);
-    return database.one(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome ilike '%'||$1||'%'`, [nome]);
+    console.log(id);
+    return database.one('select * from aluno where id = $1', [id]);
 }
 
-/*exports.getstudentInfo = async function (studentname) {
-    console.log('select * from usuario where usuario = $1', [studentname]);
-    return database.query('select * from usuario where usuario = $1',[studentname]);
-}*/
+exports.deleteStudent = async function (id) {
+    console.log(id);
+    return database.none('delete from aluno where id = $1', [id]);
+}
 
-// NPM - NODE PACKAGE MANAGER
-// NVM - NODE VERSION MANAGER
-// NPX - NODE PACKAGE EXECUTION
+exports.updateStudent = async function (student) {
+    console.log(student.id);
+    return database.one('update aluno set nome = $1, genero = $2, dt_matricula = $3, dt_atualizacao = $4, alergia = $5, necessidade_especial = $6, nome_escola = $7, turno_escola = $8, vl_matricula = $9, vl_mensalidade = $10, venc_mensalidade = $11, dt_fim_matricula = $12 where id = $12 returning *', [student.nome, student.genero, student.dt_matricula, currentDate, student.alergia, student.necessidadeEspecial, student.nome_escola, student.turnoEscola, student.vlMatricula, student.vlMensalidade, student.vencMensalidade, student.dtFimMatricula, student.id]);
+}

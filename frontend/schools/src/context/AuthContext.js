@@ -28,7 +28,7 @@ function AuthProvider({ children }) {
                 localStorage.setItem('token', JSON.stringify(token));
                 api.defaults.headers['x-acces-token'] = `Bearer ${token}`;
                 setAuthenticated(true);
-                return history.push('/newUser');
+                return history.push('/menu');
             }
         } catch (error) {
             alert(error);

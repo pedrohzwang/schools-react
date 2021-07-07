@@ -8,10 +8,14 @@ exports.getStudents = () => {
     return studentData.getStudents();
 }
 
-exports.getStudent = (nome) => {
-    return studentData.getStudent(nome);
-}
-
 exports.getStudentById = (id) => {
     return studentData.getStudentById(id);
+}
+
+exports.deleteStudent = (id) =>  {
+    return studentData.deleteStudent(id);
+}
+
+exports.updateStudent = (student) => {
+    return studentData.updateStudent(student);
 }

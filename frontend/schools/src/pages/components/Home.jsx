@@ -55,7 +55,7 @@ function Home() {
                 </Toolbar>
             </Grid>
             <Grid item lg={12} justify={'space-between'}>
-                <img src={ImgRoot} alt="Logo" />
+                {/*<img src={ImgRoot} alt="Logo" />*/}
             </Grid>
 
 

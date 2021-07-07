@@ -38,35 +38,35 @@ const useStyles = makeStyles({
     },
 });
 
-export default function UserList() {
+export default function StudentList() {
     const classes = useStyles();
     const history = useHistory();
-    const [users, setUsers] = useState([]);
+    const [students, setStudents] = useState([]);
 
-    async function handleDeleteUser(id) {
+    async function handleDeleteStudent(id) {
         try {
-            await api.delete(`user/${id}`, {});
-            setUsers(users.filter(user => user.id !== id));
+            await api.delete(`student/${id}`, {});
+            setStudents(students.filter(student => student.id !== id));
         } catch (error) {
-            alert('Erro ao deletar user');
+            alert('Erro ao deletar student');
         }
     }
 
-    function handleUpdateUser(id) {
+    function handleUpdateStudent(id) {
         //redirecionamento para pagina de atualização de usuário
         console.log(id);
-        const url = `/updateUser?id=${id}`;
+        const url = `/updatestudent?id=${id}`;
         <Redirect to={{
-            pathname: "/updateUser",
+            pathname: "/updatestudent",
             search: `?id=${id}`,
         }} />
         //?id=${id}`}
-        //'/updateUser?id='
+        //'/updatestudent?id='
     }
 
     useEffect(() => {
-        api.get('users', {}).then(response => {
-            setUsers(response.data);
+        api.get('students', {}).then(response => {
+            setStudents(response.data);
         });
     }, []);
 
@@ -80,27 +80,28 @@ export default function UserList() {
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell >
                             <StyledTableCell align="right">Nome</StyledTableCell >
-                            <StyledTableCell align="right">Email</StyledTableCell >
-                            <StyledTableCell align="right">Perfil</StyledTableCell >
+                            <StyledTableCell align="right">Turno</StyledTableCell >
+                            <StyledTableCell align="right">Escola</StyledTableCell >
+                            <StyledTableCell align="right">Valor Mensalidade</StyledTableCell >
                             <StyledTableCell align="center">Excluir</StyledTableCell >
                             <StyledTableCell align="center">Atualizar</StyledTableCell >
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.map(user => (
-                            <StyledTableRow key={user.id}>
+                        {students.map(student => (
+                            <StyledTableRow key={student.id}>
                                 <StyledTableCell component="th" scope="row">
-                                    {user.id}
+                                    {student.id}
                                 </StyledTableCell>
-                                <StyledTableCell align="right">{user.nome}</StyledTableCell >
-                                <StyledTableCell align="right">{user.email}</StyledTableCell >
-                                <StyledTableCell align="right">{user.tipo_perfil}</StyledTableCell >
+                                <StyledTableCell align="right">{student.nome}</StyledTableCell >
+                                <StyledTableCell align="right">{student.turno_escola}</StyledTableCell >
+                                <StyledTableCell align="right">{student.nome_escola}</StyledTableCell >
+                                <StyledTableCell align="right">R$ {student.vl_mensalidade}</StyledTableCell >
                                 <StyledTableCell align="center">
-                                    <button className="btn btn-primary" type="button" onClick={() => handleDeleteUser(user.id)}>Excluir</button>
+                                    <Button variant="contained" color="primary" onClick={() => handleDeleteStudent(student.id)}>Excluir</Button>
                                 </StyledTableCell >
                                 <StyledTableCell align="center">
-                                    {/*<button className="btn btn-primary" type="button" onClick={() => handleUpdateUser(user.id)}></button>*/}
-                                    <Link className="btn btn-primary" to={`/updateUser?id=${user.id}`}>Atualizar</Link> 
+                                    <Link className="btn btn-primary" to={`/updatestudent?id=${student.id}`}>Atualizar</Link> 
                                 </StyledTableCell >
                             </StyledTableRow >
                         ))}

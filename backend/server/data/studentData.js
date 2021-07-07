@@ -20,6 +20,10 @@ exports.getStudent = async function (nome) {
     return database.query(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome ilike '%'||$1||'%'`, [nome]);
 }
 
+exports.getStudentById = async function (id) {
+    console.log(nome);
+    return database.one(`select id, nome, email, telefone, (select descricao from tipo_usuario where codigo = cd_tipo) tipo_perfil, avatar from usuario where nome ilike '%'||$1||'%'`, [nome]);
+}
 
 /*exports.getstudentInfo = async function (studentname) {
     console.log('select * from usuario where usuario = $1', [studentname]);

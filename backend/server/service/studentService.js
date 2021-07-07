@@ -11,3 +11,7 @@ exports.getStudents = () => {
 exports.getStudent = (nome) => {
     return studentData.getStudent(nome);
 }
+
+exports.getStudentById = (id) => {
+    return studentData.getStudentById(id);
+}

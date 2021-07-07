@@ -44,6 +44,26 @@ CREATE TABLE public.aluno (
     primary key (id)
 );
 
+CREATE TABLE public.responsavel (
+    id serial NOT NULL,
+    nome character varying(45) not NULL,
+	cpf character varying(11) not NULL,
+	id_dependente integer not null,
+	genero character varying(20) not null,
+	dt_atualizacao date not null,
+	local_trabalho character varying(100),
+	parentesco character varying(100) not NULL,
+	logradouro character varying(20) not NULL,
+	numero smallint not null,
+	cep character varying(20) not NULL,
+	bairro character varying(80) not NULL,
+	cidade character varying(80) not NULL,
+	telefone character varying(20) not NULL,
+	codigo_area character varying(10) not NULL,
+    primary key (id),
+	foreign key (id_dependente) references aluno (id)
+);
+
 
 INSERT INTO public.livro (nome, editora, isbn, quantidade, assunto, autor, descricao) VALUES ('teste teste', 7, '978-3-16-148410-1', 21, 5, 13, 'descricao qualquer');
 INSERT INTO public.livro (nome, editora, isbn, quantidade, assunto, autor, descricao) VALUES ('Os 3 porquinhos', 1, '12332342342', 10, 1, 10, 'descricao qualquer');

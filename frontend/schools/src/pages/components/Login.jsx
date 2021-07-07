@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import schema from './schema';
+import { useHistory } from 'react-router-dom';
 
 
 function Copyright() {
@@ -46,14 +47,18 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(1, 0, 1),
     },
     errors: {
         flexDirection: 'column'
+    },
+    home: {
+        marginBottom: '10px'
     }
 }));
 
 export default function SignIn() {
+    const history = useHistory();
     const { handleLogin } = useContext(Context);
     const classes = useStyles();
 
@@ -127,6 +132,15 @@ export default function SignIn() {
                                 className={classes.submit}
                             >
                                 Login
+                            </Button>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                className={classes.home}
+                                onClick={() => { history.push("/") }}
+                            >
+                                Voltar
                             </Button>
                             <Grid container>
                                 <Grid item xs={12} lg={12}>

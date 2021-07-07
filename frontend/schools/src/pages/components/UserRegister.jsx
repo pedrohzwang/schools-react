@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Context } from '../../context/AuthContext';
-import { TextField, makeStyles, Box, Grid, Button, Paper, Select } from '@material-ui/core';
+import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link } from '@material-ui/core';
 import api from '../services/api';
 import { Formik, Form, ErrorMessage } from 'formik';
 import schema from './schema';
 import Dropzone from 'react-dropzone';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,15 +39,35 @@ const useStyles = makeStyles((theme) => ({
     errorMessage: {
         fontSize: '10px',
         color: 'red',
+    },
+    select: {
+        padding: '0px',
+        marginTop: '7.2%'
+    },
+    buttons: {
+        spacing: theme.spacing(4)
     }
 
 }));
 
 function UserRegister() {
-
+    const history = useHistory();
     const { authenticated } = useContext(Context);
     const token = localStorage.getItem('token');
+
+    api.interceptors.request.use(
+        config => {
+            config.headers['x-access-token'] = `Bearer ${token}`;
+            console.log(config.headers);
+            return config;
+        },
+        error => {
+            return Promise.reject(error);
+        }
+    );
+
     console.log(authenticated);
+    console.log(token);
 
     async function handleRegisterUser(values) {
         console.log("Dados: \n");
@@ -63,7 +84,7 @@ function UserRegister() {
         try {
             console.log("Dados: \n" + JSON.stringify(user));
             const response = await api.post('user', user);
-            console.log(response.data);
+            console.log(response);
             alert('Sucesso!')
         } catch (error) {
             alert(error.message);
@@ -121,6 +142,7 @@ function UserRegister() {
                                     </Grid>
                                     <Grid item lg={3}>
                                         <Select
+                                            className={classes.select}
                                             required
                                             name="cdTipo"
                                             placeholder="Tipo de Perfil"
@@ -128,8 +150,9 @@ function UserRegister() {
                                             fullWidth
                                             label="Tipo de perfil"
                                             onChange={e => (values.cdTipo = e.target.value)}
+                                            defaultValue={1}
                                         >
-                                            <option defaultValue value={1}>Administrador</option>
+                                            <option value={1}>Administrador</option>
                                             <option value={2}>Gerente</option>
                                             <option value={3}>Operacional</option>
                                         </Select>
@@ -160,22 +183,29 @@ function UserRegister() {
                                             onChange={e => (values.telefone = e.target.value)} />
                                     </Grid>
                                     <Grid item lg={4}>
-                                        <TextField 
-                                        required
-                                        type="text"
-                                        name="diretorioAvatar"
-                                        variant="filled"
-                                        margin="normal"
-                                        fullWidth
-                                        label="Avatar (link)"
-                                        placeholder="Link da imagem"
-                                        onChange={e => (values.diretorioAvatar = e.target.value)} />
+                                        <TextField
+                                            required
+                                            type="text"
+                                            name="diretorioAvatar"
+                                            variant="filled"
+                                            margin="normal"
+                                            fullWidth
+                                            label="Avatar (link)"
+                                            placeholder="Link da imagem"
+                                            onChange={e => (values.diretorioAvatar = e.target.value)} />
                                     </Grid>
                                     <Grid item lg={12} sm={12} xs={12}>
                                         <Grid container justify={'center'}>
-                                            <Grid item>
-                                                <Button color={'primary'} variant={'outlined'} type="submit">Salvar</Button>
+                                            <Grid item lg={4} sm={4} />
+                                            <Grid item lg={2} sm={2}>
+                                                <Button className={classes.buttons} color={'primary'} variant={'contained'} type="submit">Salvar</Button>
                                             </Grid>
+                                            <Grid item lg={2} sm={2}>
+                                                <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/") }}>
+                                                    Voltar
+                                                </Button>
+                                            </Grid>
+                                            <Grid item lg={4} sm={4} />
                                         </Grid>
                                     </Grid>
                                 </Grid>

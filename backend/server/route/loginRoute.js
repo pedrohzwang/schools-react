@@ -11,7 +11,7 @@ router.post('/login', async function(req, res) {
         console.log(info);
         const user = await loginService.verifyEmail(info.email);
         if(user && info.senha === user.senha){
-            const token = secret.signToken(user.id, 300);
+            const token = secret.signToken(user.id, 60000000);
             return res.json({auth: true, token});
         }
 
@@ -21,7 +21,7 @@ router.post('/login', async function(req, res) {
     }
 })
 
-router.post('/logout', secret.verifyJWT, function(req, res) {
+router.post('/logout', function(req, res) {
     const token = req.headers['x-access-token'];
     secret.addBlacklist(token);
     return res.status(200).end();

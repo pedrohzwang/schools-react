@@ -6,7 +6,7 @@ var year = data.getFullYear();
 currentDate = year + '-' + month + '-' + day;
 
 exports.saveResponsible = async function (responsible) {
-    return database.one('insert into responsavel (nome, cpf, id_dependente, genero, dt_atualizacao, local_trabalho, parentesco, logradouro, 		numero, cep, bairro, cidade, telefone, codigo_area) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) returning * ', [responsible.nome, responsible.cpf, responsible.idDependente, responsible.genero, currentDate, responsible.localTrabalho, responsible.parentesco, responsible.logradouro, responsible.numero, responsible.cep, responsible.bairro, responsible.cidade, responsible.telefone, responsible.codigoArea]);
+    return database.one('insert into responsavel (nome, cpf, id_dependente, genero, dt_atualizacao, local_trabalho, parentesco, logradouro, numero, cep, bairro, cidade, telefone, codigo_area) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) returning * ', [responsible.nome, responsible.cpf, responsible.idDependente, responsible.genero, currentDate, responsible.localTrabalho, responsible.parentesco, responsible.logradouro, responsible.numero, responsible.cep, responsible.bairro, responsible.cidade, responsible.telefone, responsible.codigoArea]);
 }
 
 exports.getResponsibles = async function () {

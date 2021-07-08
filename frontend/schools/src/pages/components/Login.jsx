@@ -138,6 +138,7 @@ export default function SignIn() {
                                 variant="contained"
                                 color="secondary"
                                 className={classes.home}
+                                type="submit"
                                 onClick={() => { history.push("/") }}
                             >
                                 Voltar

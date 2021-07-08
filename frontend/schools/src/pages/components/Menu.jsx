@@ -20,6 +20,10 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         padding: '0 30px',
         fontFamily: 'Lato',
-        fontSize: '40px'
+        fontSize: '40px',
+        display: 'block'
     },
     title: {
         textAlign: 'center'
@@ -95,6 +100,31 @@ const useStyles = makeStyles((theme) => ({
     titleDrawer: {
         marginTop: '10px',
         marginBottom: '10px'
+    },
+    functions: {
+        background: 'black'
+    },
+    cardAction: {
+        justifyContent: 'center'
+    },
+    cardTitle: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '30px'
+    },
+    functionsContainer: {
+        maxWidth: '1270px',
+        marginLeft: theme.spacing(20),
+        borderRadius: '30px',
+        height: '400px',
+        maxHeight: '960px'
+    },
+    cards: {
+        margin: theme.spacing(3)
+    },
+    cardStyle: {
+        height: '180px',
+        width: '350px'
     }
 }));
 
@@ -103,46 +133,84 @@ function Menu() {
     const history = useHistory();
     const token = localStorage.getItem('token');
     const theme = useTheme();
-
     const classes = useStyles();
+    const bull = <span className={classes.bullet}>•</span>;
+
     return (
 
-        <Box className={classes.root}>
-            <Grid container justify={'center'}>
-                <Grid item className={classes.title} lg={12}>
-                    <h3 color={'secondary'} className={classes.h3}>Menu</h3>
-                </Grid>
-                <Grid item >
-                    <Drawer
-                        variant="permanent"
-                        anchor="left"
-                    >
-                        <Typography align={'center'} className={classes.titleDrawer} variant="h6" noWrap>
-                            Gerenciar
-                        </Typography>
-                        <Divider />
-                        <List>
-                            <ListItem button onClick={() => {history.push('/users')}}>
-                                <ListItemIcon>
-                                    <AccountBoxIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={'Usuários'} />
-                            </ListItem>
-                            <ListItem button onClick={() => {history.push('/students')}}>
-                                <ListItemIcon>
-                                    <LocalLibraryIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={'Alunos'} />
-                            </ListItem>
-                        </List>
-                    </Drawer>
-                </Grid>
-                <Grid container>
-                    <Grid item lg={12} sm={12} xs={12}>
+        <React.Fragment>
+            <Box className={classes.root}>
+                <Grid container justify={'center'}>
+                    <Grid item className={classes.title} lg={12}>
+                        <h3 color={'secondary'} className={classes.h3}>Menu</h3>
+                    </Grid>
+                    <Grid item >
+                        <Drawer
+                            variant="permanent"
+                            anchor="left"
+                        >
+                            <Typography align={'center'} className={classes.titleDrawer} variant="h6" noWrap>
+                                Gerenciar
+                            </Typography>
+                            <Divider />
+                            <List>
+                                <ListItem button onClick={() => { history.push('/users') }}>
+                                    <ListItemIcon>
+                                        <AccountBoxIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Usuários'} />
+                                </ListItem>
+                                <ListItem button onClick={() => { history.push('/students') }}>
+                                    <ListItemIcon>
+                                        <LocalLibraryIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Alunos'} />
+                                </ListItem>
+                            </List>
+                        </Drawer>
+                    </Grid>
+                    <Grid container>
+                        <Grid item lg={12} sm={12} xs={12}>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Box >
+                <Box>
+                    <Grid container className={classes.functionsContainer}>
+                        <Grid item className={classes.cards}>
+                            <Card className={classes.cardStyle}>
+                                <CardContent>
+                                    <Typography className={classes.cardTitle} color="textSecondary" gutterBottom>
+                                        Cadastro de Aluno
+                                    </Typography>
+                                    <Typography component="p">
+                                        Cadastre alunos na base de dados
+                                    </Typography>
+                                </CardContent>
+                                <CardActions className={classes.cardAction}>
+                                    <Button onClick={() => history.push('/newStudent')} variant="contained" color="secondary" size="small">Acessar</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                        <Grid item className={classes.cards}>
+                            <Card className={classes.cardStyle}>
+                                <CardContent>
+                                    <Typography className={classes.cardTitle} color="textSecondary" gutterBottom>
+                                        Cadastro de Usuário
+                                    </Typography>
+                                    <Typography component="p">
+                                        Cadastre novos usuários que possam gerenciar o sistema
+                                    </Typography>
+                                </CardContent>
+                                <CardActions className={classes.cardAction}>
+                                    <Button onClick={() => history.push('/newUser')} variant="contained" color="secondary" size="small">Acessar</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Box >
+
+        </React.Fragment>
     )
 }
 

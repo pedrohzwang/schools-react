@@ -83,8 +83,8 @@ export default function StudentList() {
                             <StyledTableCell align="right">Turno</StyledTableCell >
                             <StyledTableCell align="right">Escola</StyledTableCell >
                             <StyledTableCell align="right">Valor Mensalidade</StyledTableCell >
-                            <StyledTableCell align="center">Excluir</StyledTableCell >
-                            <StyledTableCell align="center">Atualizar</StyledTableCell >
+                            <StyledTableCell align="center"></StyledTableCell >
+                            <StyledTableCell align="center"></StyledTableCell >
                         </TableRow>
                     </TableHead>
                     <TableBody>

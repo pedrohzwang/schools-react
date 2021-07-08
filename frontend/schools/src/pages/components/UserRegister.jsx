@@ -201,7 +201,7 @@ function UserRegister() {
                                                 <Button className={classes.buttons} color={'primary'} variant={'contained'} type="submit">Salvar</Button>
                                             </Grid>
                                             <Grid item lg={2} sm={2}>
-                                                <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/") }}>
+                                                <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/menu") }}>
                                                     Voltar
                                                 </Button>
                                             </Grid>

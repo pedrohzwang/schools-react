@@ -1,9 +1,8 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme, makeStyles, Typography, CssBaseline, Container } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, makeStyles, Typography, CssBaseline, Container, Link } from '@material-ui/core';
 import { AppBar, Button, Toolbar, IconButton, Box, Grid } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import HelpIcon from '@material-ui/icons/Help';
+import HomeIcon from '@material-ui/icons/Home';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         maxWidth: '1000px'
     },
+    tip: {
+        marginBottom: theme.spacing(2)
+    }
 }));
 
 function Home() {
@@ -66,9 +68,9 @@ function Home() {
                         className={classes.button_menu}
                         variant='contained'
                         color='secondary'
-                        onClick={() => { history.push("/faq") }}
-                        startIcon={<HelpIcon />}>
-                        FAQ
+                        onClick={() => { history.push("/") }}
+                        startIcon={<HomeIcon />}>
+                        Home
                     </Button>
                     <Button
                         className={classes.button_menu}
@@ -85,27 +87,36 @@ function Home() {
                     <Box>
                         <Grid item lg={12}>
                             <Typography align="center" variant="h3">
-                                A Solução
+                                Perguntas Frequentes
                             </Typography>
                         </Grid>
                         <Box className={classes.groupContent}>
-                            <Grid lg={6} alignItens="center">
+                            <Grid lg={12} alignItens="center">
                                 <Box className={classes.group}>
                                     <Box className={classes.paragraph}>
-                                        <Typography align="left" variant="body1">
-                                            O Schools é um software que tem como objetivo te auxiliar na sua gestão educacional.
+                                        <Typography align="center" variant="h5" className={classes.tip} color="primary">
+                                            Quais funções o Schools oferece?
                                         </Typography>
-                                        <Typography align="left" variant="body1">
-                                            Com o Schools você será capaz de agilizar suas tarefas com funcionalidades que lhe permitem cadastros e acesso a dados de maneira simplificada e intuitiva.
+                                        <Typography align="center" variant="body1">
+                                            Oferece serviços para cadastros de usuários, alunos, responsáveis e afins.
                                         </Typography>
                                     </Box>
-                                </Box>
-                            </Grid>
-                            <Grid lg={6}>
-                                <Box className={classes.group}>
                                     <Box className={classes.paragraph}>
-                                        <img className={classes.img} src="http://www.connectescolas.com.br/blog/image/5-Autores-para-quem-quer-entender-gestao-escolar.jpg" alt="" />
+                                        <Typography align="center" variant="h5" className={classes.tip} color="primary">
+                                            Onde posso cadastrar usuários?
+                                        </Typography>
+                                        <Typography align="center" variant="body1">
+                                            Na função de <Link href="/newUser" color="secondary">Cadastro de Usuários</Link>
+                                        </Typography>
                                     </Box>
+                                    <Box className={classes.paragraph}>
+                                        <Typography align="center" variant="h5" className={classes.tip} color="primary">
+                                            Onde posso cadastrar alunos?
+                                        </Typography>
+                                        <Typography align="center" variant="body1">
+                                            Na função de <Link href="/newStudent" color="secondary">Cadastro de Alunos</Link>
+                                        </Typography>
+                                    </Box> 
                                 </Box>
                             </Grid>
                         </Box>

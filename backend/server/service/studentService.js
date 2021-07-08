@@ -1,7 +1,7 @@
 const studentData = require('../data/studentData');
 
 exports.saveStudent = (student) => {
-    return studentData.saveStudent(user);
+    return studentData.saveStudent(student);
 }
 
 exports.getStudents = () => {

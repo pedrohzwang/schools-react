@@ -82,8 +82,8 @@ export default function UserList() {
                             <StyledTableCell align="right">Nome</StyledTableCell >
                             <StyledTableCell align="right">Email</StyledTableCell >
                             <StyledTableCell align="right">Perfil</StyledTableCell >
-                            <StyledTableCell align="center">Excluir</StyledTableCell >
-                            <StyledTableCell align="center">Atualizar</StyledTableCell >
+                            <StyledTableCell align="center"></StyledTableCell >
+                            <StyledTableCell align="center"></StyledTableCell >
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -96,10 +96,9 @@ export default function UserList() {
                                 <StyledTableCell align="right">{user.email}</StyledTableCell >
                                 <StyledTableCell align="right">{user.tipo_perfil}</StyledTableCell >
                                 <StyledTableCell align="center">
-                                    <button className="btn btn-primary" type="button" onClick={() => handleDeleteUser(user.id)}>Excluir</button>
+                                    <Button variant="contained" color="primary" onClick={() => handleDeleteUser(user.id)}>Excluir</Button>
                                 </StyledTableCell >
                                 <StyledTableCell align="center">
-                                    {/*<button className="btn btn-primary" type="button" onClick={() => handleUpdateUser(user.id)}></button>*/}
                                     <Link className="btn btn-primary" to={`/updateUser?id=${user.id}`}>Atualizar</Link> 
                                 </StyledTableCell >
                             </StyledTableRow >

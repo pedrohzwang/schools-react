@@ -101,7 +101,7 @@ export default function StudentList() {
                                     <Button variant="contained" color="primary" onClick={() => handleDeleteStudent(student.id)}>Excluir</Button>
                                 </StyledTableCell >
                                 <StyledTableCell align="center">
-                                    <Link className="btn btn-primary" to={`/updatestudent?id=${student.id}`}>Atualizar</Link> 
+                                    <Link className="btn btn-primary" to={`/studentUpdate?id=${student.id}`}>Atualizar</Link> 
                                 </StyledTableCell >
                             </StyledTableRow >
                         ))}

@@ -48,9 +48,9 @@ router.delete('/student/:id', async function(req, res) {
 
 router.put('/student', async function(req, res) {
     try {
-        console.log(req.body);
+        //console.log(req.body);
         const student = await studentService.updateStudent(req.body);
-        console.log(student);
+        //console.log(student);
         return res.status(200).json(student);
     } catch (error) {
         return res.status(400).json({message: error.message})

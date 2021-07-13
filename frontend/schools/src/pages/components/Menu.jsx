@@ -1,4 +1,5 @@
 import { Box, Button, Grid, makeStyles, useTheme } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
@@ -134,7 +135,6 @@ function Menu() {
     const token = localStorage.getItem('token');
     const theme = useTheme();
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
 
@@ -165,6 +165,12 @@ function Menu() {
                                         <LocalLibraryIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={'Alunos'} />
+                                </ListItem>
+                                <ListItem button onClick={() => { history.push('/') }}>
+                                    <ListItemIcon>
+                                        <HomeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Logout'} />
                                 </ListItem>
                             </List>
                         </Drawer>

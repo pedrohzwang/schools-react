@@ -55,13 +55,7 @@ export default function UserList() {
     function handleUpdateUser(id) {
         //redirecionamento para pagina de atualização de usuário
         console.log(id);
-        const url = `/updateUser?id=${id}`;
-        <Redirect to={{
-            pathname: "/updateUser",
-            search: `?id=${id}`,
-        }} />
-        //?id=${id}`}
-        //'/updateUser?id='
+        const url = `/userUpdate?id=${id}`;
     }
 
     useEffect(() => {
@@ -72,8 +66,6 @@ export default function UserList() {
 
     return (
         <div>
-            {/*<HomeAppBar />*/}
-
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
@@ -99,7 +91,7 @@ export default function UserList() {
                                     <Button variant="contained" color="primary" onClick={() => handleDeleteUser(user.id)}>Excluir</Button>
                                 </StyledTableCell >
                                 <StyledTableCell align="center">
-                                    <Link className="btn btn-primary" to={`/updateUser?id=${user.id}`}>Atualizar</Link> 
+                                    <Link className="btn btn-primary" to={`/userUpdate?id=${user.id}`}>Atualizar</Link> 
                                 </StyledTableCell >
                             </StyledTableRow >
                         ))}

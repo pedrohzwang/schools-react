@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import api from '../pages/services/api';
 import history from '../history';
-import UserRegister from '../pages/components/UserRegister';
+import Menu from '../pages/components/Menu';
 
 const Context = createContext();
 
@@ -28,7 +28,8 @@ function AuthProvider({ children }) {
                 localStorage.setItem('token', JSON.stringify(token));
                 api.defaults.headers['x-acces-token'] = `Bearer ${token}`;
                 setAuthenticated(true);
-                return history.push('/menu');
+                //window.location.href('http://localhost:3000/menu');
+                history.push('/menu');
             }
         } catch (error) {
             alert(error);

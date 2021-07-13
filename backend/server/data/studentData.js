@@ -21,7 +21,8 @@ exports.getStudentById = async function (id) {
 }
 
 exports.deleteStudent = async function (id) {
-    console.log(id);
+    console.log('delete from aluno where id = $1', [id]);
+    database.none('delete from responsavel where id_dependente = $1', [id]);
     return database.none('delete from aluno where id = $1', [id]);
 }
 

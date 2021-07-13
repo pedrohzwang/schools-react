@@ -1,6 +1,6 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme, makeStyles, Typography, CssBaseline, Container, Link } from '@material-ui/core';
-import { AppBar, Button, Toolbar, IconButton, Box, Grid } from '@material-ui/core';
+import { makeStyles, Typography, CssBaseline, Link } from '@material-ui/core';
+import { Button, Toolbar, Box, Grid } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
 import { useHistory } from 'react-router-dom';

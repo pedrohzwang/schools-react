@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../../context/AuthContext';
-import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link } from '@material-ui/core';
+import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link, InputLabel, MenuItem, Typography } from '@material-ui/core';
 import api from '../services/api';
 import { Formik, Form, ErrorMessage } from 'formik';
 import schema from './schema';
@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     },
     buttons: {
         spacing: theme.spacing(4)
+    },
+    errorMessages: {
+        marginTop: theme.spacing(6)
     }
 
 }));
@@ -107,7 +110,7 @@ function UserRegister() {
                             nome: '',
                             email: '',
                             senha: '',
-                            cdTipo: '',
+                            cdTipo: 1,
                             telefone: '',
                             diretorioAvatar: ''
                         }}
@@ -148,13 +151,15 @@ function UserRegister() {
                                             placeholder="Tipo de Perfil"
                                             variant="filled"
                                             fullWidth
-                                            label="Tipo de perfil"
                                             onChange={e => (values.cdTipo = e.target.value)}
-                                            defaultValue={1}
+                                            defaultValue={0}
                                         >
-                                            <option value={1}>Administrador</option>
-                                            <option value={2}>Gerente</option>
-                                            <option value={3}>Operacional</option>
+                                            <MenuItem value={0} disabled>
+                                                <em>Selecione</em>
+                                            </MenuItem>
+                                            <MenuItem value={1}>Administrador</MenuItem>
+                                            <MenuItem value={2}>Gerente</MenuItem>
+                                            <MenuItem value={3}>Operacional</MenuItem>
                                         </Select>
                                     </Grid>
                                     <Grid item lg={4}>
@@ -178,7 +183,7 @@ function UserRegister() {
                                             margin="normal"
                                             fullWidth
                                             label="Telefone"
-                                            pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+                                            pattern="[0-9]{5}-[0-9]{4}"
                                             placeholder="Telefone (99 99999-9999)"
                                             onChange={e => (values.telefone = e.target.value)} />
                                     </Grid>
@@ -209,31 +214,29 @@ function UserRegister() {
                                         </Grid>
                                     </Grid>
                                 </Grid>
+
+                                <Grid container justifyContent={'center'} className={classes.errorMessages}>
+                                    <Grid item>
+                                        <Typography color={'error'}>
+                                            {errors.nome}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.senha}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.email}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.telefone}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
                             </Form>
                         )}
                     </Formik>
                 </Grid>
-                <Grid container>
-                    <Grid item lg={12} sm={12} xs={12}>
-                        <Paper>
-
-                        </Paper>
-                    </Grid>
-                </Grid>
             </Grid>
         </Box>
-
-        /*
-            Login
-            <Grid container justify={'center'}>
-                <Grid className={classes.login} item lg={12}>
-                    <h2 color={'secondary'} className={classes.h2}>Login</h2>
-                </Grid>
-                <Grid item>
-                    <Paper className={classes.p} justify={'center'} />
-                </Grid>
-            </Grid>
-            */
     )
 }
 

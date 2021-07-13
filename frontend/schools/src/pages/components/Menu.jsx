@@ -1,27 +1,16 @@
-import { Box, Button, Grid, makeStyles, useTheme } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import clsx from 'clsx';
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
-import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -132,8 +121,8 @@ const useStyles = makeStyles((theme) => ({
 function Menu() {
 
     const history = useHistory();
-    const token = localStorage.getItem('token');
-    const theme = useTheme();
+    //const token = localStorage.getItem('token');
+    //const theme = useTheme();
     const classes = useStyles();
 
     return (

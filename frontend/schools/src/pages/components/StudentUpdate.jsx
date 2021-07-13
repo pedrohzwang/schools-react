@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../../context/AuthContext';
-import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link, Divider } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { TextField, makeStyles, Box, Grid, Button, Select } from '@material-ui/core';
 import api from '../services/api';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import schema from './schema';
-import Dropzone from 'react-dropzone';
 import { useHistory } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 
@@ -103,11 +101,10 @@ function StudentRegister() {
     const classes = useStyles();
     if (studentSelected) {
         return (
-
             <Box className={classes.root}>
                 <Grid container justify={'center'}>
                     <Grid item className={classes.title} lg={12}>
-                        <h3 color={'secondary'} className={classes.h3}>Novo Aluno</h3>
+                        <h3 color={'secondary'} className={classes.h3}>Editar Aluno</h3>
                     </Grid>
                     <Grid item className={classes.form}>
                         <Formik
@@ -267,7 +264,7 @@ function StudentRegister() {
                                                     <Button className={classes.buttons} color={'primary'} variant={'contained'} type="submit">Salvar</Button>
                                                 </Grid>
                                                 <Grid item lg={2} sm={2}>
-                                                    <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/menu") }}>
+                                                    <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/students") }}>
                                                         Voltar
                                                     </Button>
                                                 </Grid>

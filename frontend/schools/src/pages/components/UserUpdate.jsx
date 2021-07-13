@@ -1,10 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Context } from '../../context/AuthContext';
-import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link, Typography } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { TextField, makeStyles, Box, Grid, Button, Select, Typography, MenuItem } from '@material-ui/core';
 import api from '../services/api';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import schema from './schema';
-import Dropzone from 'react-dropzone';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,8 +50,11 @@ const useStyles = makeStyles((theme) => ({
     },
     actualInfoTitle: {
         marginBottom: '20px'
+    },
+    imgAvatar: {
+        width: '250px',
+        height: '250px'
     }
-
 }));
 
 function UserRegister() {
@@ -68,6 +69,7 @@ function UserRegister() {
         console.log("Dados: \n");
         console.log(values);
         const user = {
+            id: id,
             nome: values.nome,
             email: values.email,
             senha: values.senha,
@@ -100,7 +102,7 @@ function UserRegister() {
             <Box className={classes.root}>
                 <Grid container justifyContent={'center'}>
                     <Grid item className={classes.title} lg={12}>
-                        <h3 color={'secondary'} className={classes.h3}>Novo Usuário</h3>
+                        <h3 color={'secondary'} className={classes.h3}>Editar Usuário</h3>
                     </Grid>
                     <Grid item className={classes.form}>
                         <Formik
@@ -110,7 +112,7 @@ function UserRegister() {
                                 nome: '',
                                 email: '',
                                 senha: '',
-                                cdTipo: '',
+                                cdTipo: 1,
                                 telefone: '',
                                 diretorioAvatar: ''
                             }}
@@ -153,11 +155,14 @@ function UserRegister() {
                                                 fullWidth
                                                 label="Tipo de perfil"
                                                 onChange={e => (values.cdTipo = e.target.value)}
-                                                defaultValue={1}
+                                                defaultValue={0}
                                             >
-                                                <option value={1}>Administrador</option>
-                                                <option value={2}>Gerente</option>
-                                                <option value={3}>Operacional</option>
+                                                <MenuItem value={0} disabled>
+                                                    <em>Selecione</em>
+                                                </MenuItem>
+                                                <MenuItem value={1}>Administrador</MenuItem>
+                                                <MenuItem value={2}>Gerente</MenuItem>
+                                                <MenuItem value={3}>Operacional</MenuItem>
                                             </Select>
                                         </Grid>
                                         <Grid item lg={4}>
@@ -204,11 +209,28 @@ function UserRegister() {
                                                     <Button className={classes.buttons} color={'primary'} variant={'contained'} type="submit">Salvar</Button>
                                                 </Grid>
                                                 <Grid item lg={2} sm={2}>
-                                                    <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/menu") }}>
+                                                    <Button className={classes.buttons} color={'secondary'} variant={'contained'} onClick={() => { history.push("/users") }}>
                                                         Voltar
                                                     </Button>
                                                 </Grid>
                                                 <Grid item lg={4} sm={4} />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid container justifyContent={'center'} className={classes.errorMessages}>
+                                            <Grid item>
+                                                <Typography color={'error'}>
+                                                    {errors.nome}
+                                                </Typography>
+                                                <Typography color={'error'}>
+                                                    {errors.senha}
+                                                </Typography>
+                                                <Typography color={'error'}>
+                                                    {errors.email}
+                                                </Typography>
+                                                <Typography color={'error'}>
+                                                    {errors.telefone}
+                                                </Typography>
                                             </Grid>
                                         </Grid>
                                     </Grid>
@@ -238,23 +260,16 @@ function UserRegister() {
                             Tipo de perfil: {userSelected.tipo_perfil}
                         </Typography>
                         <Typography align={'center'} variant="h6" noWrap>
-                            Avatar (link): {userSelected.avatar}
+                            Avatar:
                         </Typography>
+                    </Grid>
+                    <Grid container justifyContent={'center'}>
+                        <Grid item>
+                            <img className={classes.imgAvatar} src={userSelected.avatar} alt="Avatar" />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Box>
-
-            /*
-                Login
-                <Grid container justify={'center'}>
-                    <Grid className={classes.login} item lg={12}>
-                        <h2 color={'secondary'} className={classes.h2}>Login</h2>
-                    </Grid>
-                    <Grid item>
-                        <Paper className={classes.p} justify={'center'} />
-                    </Grid>
-                </Grid>
-                */
         )
     }
 

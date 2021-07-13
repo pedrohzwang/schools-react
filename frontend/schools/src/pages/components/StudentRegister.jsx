@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../../context/AuthContext';
-import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link, Divider } from '@material-ui/core';
+import { TextField, makeStyles, Box, Grid, Button, Paper, Select, Link, Divider, Typography, MenuItem } from '@material-ui/core';
 import api from '../services/api';
 import { Formik, Form, ErrorMessage } from 'formik';
 import schema from './schema';
@@ -90,7 +90,7 @@ function StudentRegister() {
             const studentResponse = await api.post('student', student);
             console.log("studentResponse");
             console.log(studentResponse.data);
-            if(studentResponse){
+            if (studentResponse) {
                 responsible.idDependente = studentResponse.data.id;
                 console.log(JSON.stringify(responsible));
                 responsibleResponse = await api.post('responsible', responsible);
@@ -166,10 +166,14 @@ function StudentRegister() {
                                             fullWidth
                                             label="Gênero"
                                             onChange={e => (values.genero = e.target.value)}
-                                            defaultValue={null}
+                                            defaultValue={0}
                                         >
-                                            <option value={'Feminino'}>Feminino</option>
-                                            <option value={'Masculino'}>Masculino</option>
+                                            <MenuItem value={0} disabled>
+                                                <em>Selecione</em>
+                                            </MenuItem>
+                                            <MenuItem value={'Feminino'}>Feminino</MenuItem>
+                                            <MenuItem value={'Masculino'}>Masculino</MenuItem>
+                                            <MenuItem value={'Não Informado'}>Prefiro Não Informar</MenuItem>
                                         </Select>
                                     </Grid>
                                     <Grid item lg={4}>
@@ -205,10 +209,13 @@ function StudentRegister() {
                                             fullWidth
                                             label="Turno"
                                             onChange={e => (values.turnoEscola = e.target.value)}
-                                            defaultValue={null}
+                                            defaultValue={0}
                                         >
-                                            <option value={'Matutino'}>Matutino</option>
-                                            <option value={'Vespertino'}>Vespertino</option>
+                                            <MenuItem value={0} disabled>
+                                                <em>Selecione</em>
+                                            </MenuItem>
+                                            <MenuItem value={'Matutino'}>Matutino</MenuItem>
+                                            <MenuItem value={'Vespertino'}>Vespertino</MenuItem>
                                         </Select>
                                     </Grid>
                                     <Grid item lg={4}>
@@ -225,7 +232,7 @@ function StudentRegister() {
                                     <Grid item lg={4}>
                                         <TextField
                                             required
-                                            type="text"
+                                            type="number"
                                             name="vlMatricula"
                                             variant="filled"
                                             margin="normal"
@@ -237,7 +244,7 @@ function StudentRegister() {
                                     <Grid item lg={4}>
                                         <TextField
                                             required
-                                            type="text"
+                                            type="number"
                                             name="vlMensalidade"
                                             variant="filled"
                                             margin="normal"
@@ -259,7 +266,7 @@ function StudentRegister() {
                                             onChange={e => (values.vencMensalidade = e.target.value)} />
                                     </Grid>
                                     <Grid lg={4} />
-                                
+
                                     <Grid lg={12}>
                                         <Divider />
                                     </Grid>
@@ -304,10 +311,14 @@ function StudentRegister() {
                                             fullWidth
                                             label="Gênero"
                                             onChange={e => (values.generoResponsavel = e.target.value)}
-                                            defaultValue={null}
+                                            defaultValue={0}
                                         >
-                                            <option value={'Feminino'}>Feminino</option>
-                                            <option value={'Masculino'}>Masculino</option>
+                                            <MenuItem value={0} disabled>
+                                                <em>Selecione</em>
+                                            </MenuItem>
+                                            <MenuItem value={'Feminino'}>Feminino</MenuItem>
+                                            <MenuItem value={'Masculino'}>Masculino</MenuItem>
+                                            <MenuItem value={'Não Informado'}>Prefiro Não Informar</MenuItem>
                                         </Select>
                                     </Grid>
                                     <Grid item lg={5}>
@@ -394,7 +405,7 @@ function StudentRegister() {
                                             placeholder="Cidade"
                                             onChange={e => (values.cidade = e.target.value)} />
                                     </Grid>
-                                    <Grid item lg={2}/>
+                                    <Grid item lg={2} />
                                     <Grid item lg={2}>
                                         <TextField
                                             required
@@ -433,6 +444,23 @@ function StudentRegister() {
                                             </Grid>
                                             <Grid item lg={4} sm={4} />
                                         </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid container justifyContent={'center'} className={classes.errorMessages}>
+                                    <Grid item>
+                                        <Typography color={'error'}>
+                                            {errors.nome}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.senha}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.email}
+                                        </Typography>
+                                        <Typography color={'error'}>
+                                            {errors.telefone}
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                             </Form>

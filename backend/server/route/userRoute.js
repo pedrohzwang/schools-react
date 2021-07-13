@@ -30,9 +30,9 @@ router.get('/users', async function(req, res) {
 router.get('/user/:id', async function(req, res) {
     try {
         console.log(req.params.id);
-        const users = await userService.getUserById(req.params.id);
-        console.log(users);
-        return res.status(200).json(users);
+        const user = await userService.getUserById(req.params.id);
+        console.log(user);
+        return res.status(200).json(user);
     } catch (error) {
         return res.status(400).json({message: error.message})
     }
@@ -64,6 +64,7 @@ router.put('/user', async function(req, res) {
     try {
         console.log(req.body);
         req.body.senha = encrypt.SHA256(req.body.senha).toString();
+        const actualUser = await userService
         const user = await userService.updateUser(req.body);
         console.log(user);
         return res.status(200).json(user);

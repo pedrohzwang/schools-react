@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
-import { Context } from './context/AuthContext.js';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './pages/components/Home.jsx';
 import UserRegister from './pages/components/UserRegister.jsx';
 import UserUpdate from './pages/components/UserUpdate.jsx';
 import UserList from './pages/components/UserList.jsx';
 import Login from './pages/components/Login.jsx';
-import { Component } from 'react';
-import PrivateRoute from './pages/components/PrivateRoute.jsx';
 import Menu from './pages/components/Menu.jsx';
 import StudentList from './pages/components/StudentList.jsx';
 import StudentRegister from './pages/components/StudentRegister.jsx';

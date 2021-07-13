@@ -8,9 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import api from '../services/api';
-import HomeAppBar from './HomeAppBar';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Button, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
@@ -36,6 +33,13 @@ const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
+    img: {
+        width: '100px',
+        height: '100px'
+    },
+    backButton: {
+        marginTop: '3vh'
+    }
 });
 
 export default function UserList() {
@@ -52,12 +56,6 @@ export default function UserList() {
         }
     }
 
-    function handleUpdateUser(id) {
-        //redirecionamento para pagina de atualização de usuário
-        console.log(id);
-        const url = `/userUpdate?id=${id}`;
-    }
-
     useEffect(() => {
         api.get('users', {}).then(response => {
             setUsers(response.data);
@@ -71,9 +69,10 @@ export default function UserList() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell >
-                            <StyledTableCell align="right">Nome</StyledTableCell >
-                            <StyledTableCell align="right">Email</StyledTableCell >
-                            <StyledTableCell align="right">Perfil</StyledTableCell >
+                            <StyledTableCell align="center">Foto</StyledTableCell >
+                            <StyledTableCell align="center">Nome</StyledTableCell >
+                            <StyledTableCell align="center">Email</StyledTableCell >
+                            <StyledTableCell align="center">Perfil</StyledTableCell >
                             <StyledTableCell align="center"></StyledTableCell >
                             <StyledTableCell align="center"></StyledTableCell >
                         </TableRow>
@@ -84,14 +83,17 @@ export default function UserList() {
                                 <StyledTableCell component="th" scope="row">
                                     {user.id}
                                 </StyledTableCell>
-                                <StyledTableCell align="right">{user.nome}</StyledTableCell >
-                                <StyledTableCell align="right">{user.email}</StyledTableCell >
-                                <StyledTableCell align="right">{user.tipo_perfil}</StyledTableCell >
+                                <StyledTableCell align="center">
+                                    <img className={classes.img} src={user.avatar} alt="Link do avatar" />
+                                </StyledTableCell >
+                                <StyledTableCell align="center">{user.nome}</StyledTableCell >
+                                <StyledTableCell align="center">{user.email}</StyledTableCell >
+                                <StyledTableCell align="center">{user.tipo_perfil}</StyledTableCell >
                                 <StyledTableCell align="center">
                                     <Button variant="contained" color="primary" onClick={() => handleDeleteUser(user.id)}>Excluir</Button>
                                 </StyledTableCell >
                                 <StyledTableCell align="center">
-                                    <Link className="btn btn-primary" to={`/userUpdate?id=${user.id}`}>Atualizar</Link> 
+                                    <Button variant="contained" color="primary" onClick={() => history.push(`/userUpdate?id=${user.id}`)}>Editar</Button>
                                 </StyledTableCell >
                             </StyledTableRow >
                         ))}
@@ -99,8 +101,8 @@ export default function UserList() {
                 </Table>
             </TableContainer>
 
-            <Grid container justify={'center'}>
-                <Grid item lg={12}>
+            <Grid container justifyContent={'center'} className={classes.backButton}>
+                <Grid item>
                     <Button variant="contained" color="primary" onClick={() => history.push('/menu')}>Voltar</Button>
                 </Grid>
             </Grid>
